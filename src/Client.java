@@ -149,6 +149,8 @@ public class Client{
         RTSPBufferedReader = new BufferedReader(new InputStreamReader(theClient.RTSPsocket.getInputStream()) );
         RTSPBufferedWriter = new BufferedWriter(new OutputStreamWriter(theClient.RTSPsocket.getOutputStream()) );
 
+        System.out.println("Client connection and reader/writer established");
+
         //init RTSP state:
         state = INIT;
     }
@@ -167,7 +169,7 @@ public class Client{
     class setupButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
 
-            //System.out.println("Setup Button pressed !");
+            System.out.println("Setup Button pressed !");
 
             if (state == INIT)
             {
@@ -403,17 +405,17 @@ public class Client{
             //Use the RTSPBufferedWriter to write to the RTSP socket
 
             //write the request line:
-            RTSPBufferedWriter.write(request_type + " " + VideoFileName + " " + RTSPversion );
+            RTSPBufferedWriter.write(request_type + " " + VideoFileName + " " + RTSPversion + "\r\n" );
 
             //write the CSeq line:
-            RTSPBufferedWriter.write(RTSPSeqNb);
+            RTSPBufferedWriter.write("CSeq: " + RTSPSeqNb + "\r\n");
 
             // check if request_type is equal to "SETUP" and in this case write the Transport: line
             // advertising to the server the port used to receive the RTP packets RTP_RCV_PORT
             if (request_type.equals("SETUP")) {
-                RTSPBufferedWriter.write("Transport: RTP/UDP; client_port= " + RTP_RCV_PORT);
+                RTSPBufferedWriter.write("Transport: RTP/UDP; client_port= " + RTP_RCV_PORT + "\r\n");
             } else { //otherwise, write the Session line from the RTSPid field
-                RTSPBufferedWriter.write("Session: " + RTSPid);
+                RTSPBufferedWriter.write("Session: " + RTSPid + "\r\n");
             }
             RTSPBufferedWriter.flush();
         }
