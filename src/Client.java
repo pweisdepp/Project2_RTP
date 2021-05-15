@@ -41,6 +41,15 @@ public class Client{
     JLabel iconLabel = new JLabel();
     ImageIcon icon;
 
+    JPanel loginPanel = new JPanel();
+    JLabel username = new JLabel("User");
+    JLabel password = new JLabel("Pass");
+    JTextField userField = new JTextField(15);
+    JPasswordField passField = new JPasswordField(15);
+
+    GridBagLayout gbl = new GridBagLayout();
+    GridBagConstraints gbc = new GridBagConstraints();
+
 
     //RTP variables:
     //----------------
@@ -89,6 +98,14 @@ public class Client{
             }
         });
 
+        loginPanel.add(username);
+        loginPanel.add(userField);
+        loginPanel.add(password);
+        loginPanel.add(passField);
+        buttonPanel.add(loginPanel);
+        loginPanel.setLayout(new GridLayout(4,0));
+
+
         //Buttons
         buttonPanel.setLayout(new GridLayout(1,0));
         buttonPanel.add(setupButton);
@@ -108,10 +125,10 @@ public class Client{
         mainPanel.add(iconLabel);
         mainPanel.add(buttonPanel);
         iconLabel.setBounds(0,0,380,280);
-        buttonPanel.setBounds(0,280,380,50);
+        buttonPanel.setBounds(0,300,400,80);
 
         f.getContentPane().add(mainPanel, BorderLayout.CENTER);
-        f.setSize(new Dimension(390,370));
+        f.setSize(new Dimension(400,420));
         f.setVisible(true);
 
         //init timer
